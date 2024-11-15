@@ -4,36 +4,52 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
-    public GameObject Enemy1; // Reference to the enemy prefab
+    public GameObject[] enemyPrefabs; // Array for different enemies 
     public Transform[] spawnPoints; // Array of spawn points
+    public int maxWaves = 7; // Total number of waves
+    public int enemiesPerWave = 5; 
+    public float timeBetweenWaves = 7f; // Delay between waves
+    public float spawnInterval = 3f; // Time between enemy spawns in a wave
 
-    private int maxEnemies = 5; // Maximum number of enemies to spawn
-    private int currentEnemyCount = 0; // Current number of active enemies
+    private int currentWave = 1; 
+    private int enemiesSpawnedInWave = 0; 
 
     void Start()
     {
-        // Start the spawning process
-        StartCoroutine(SpawnEnemies());
+        StartCoroutine(SpawnWave());
     }
 
-    private IEnumerator SpawnEnemies()
+    private IEnumerator SpawnWave()
     {
-        while (currentEnemyCount < maxEnemies)
+        while (currentWave <= maxWaves)
         {
-            SpawnEnemy();
-            yield return new WaitForSeconds(1f); // Adjust the wait time if needed
+            Debug.Log("Starting Wave: " + currentWave);
+
+            enemiesSpawnedInWave = 0;
+            for (int i = 0; i < enemiesPerWave; i++)
+            {
+                SpawnEnemy();
+                enemiesSpawnedInWave++;
+                yield return new WaitForSeconds(spawnInterval); // Wait before spawning the next enemy
+            }
+
+            Debug.Log("Wave " + currentWave + " complete!");
+            currentWave++;
+            enemiesPerWave += 2; // Increase difficulty by spawning more enemies in subsequent waves
+            yield return new WaitForSeconds(timeBetweenWaves); // Wait before the next wave starts
         }
+
+        Debug.Log("All waves complete!");
     }
 
     private void SpawnEnemy()
     {
-        // Choose a point in spawner
+        // Chooses Area in spawner
         int spawnIndex = Random.Range(0, spawnPoints.Length);
         Transform spawnPoint = spawnPoints[spawnIndex];
 
-        // Instantiate the enemy prefab at the chosen spawn point
-        Instantiate(Enemy1, spawnPoint.position, spawnPoint.rotation);
-        currentEnemyCount++; // Increment the count of active enemies
+        // Randomize enemy type
+        int enemyIndex = Random.Range(0, enemyPrefabs.Length);
+        Instantiate(enemyPrefabs[enemyIndex], spawnPoint.position, spawnPoint.rotation);
     }
-
 }
