@@ -7,8 +7,8 @@ public class EnemySpawner : MonoBehaviour
     public GameObject[] enemyPrefabs; // Array for different enemies 
     public Transform[] spawnPoints; // Array of spawn points
     public int maxWaves = 7; // Total number of waves
-    public int enemiesPerWave = 5; 
-    public float timeBetweenWaves = 7f; // Delay between waves
+    public int enemiesPerWave = 3; 
+    public float timeBetweenWaves = 8f; // Delay between waves
     public float spawnInterval = 3f; // Time between enemy spawns in a wave
 
     private int currentWave = 1; 
@@ -48,8 +48,13 @@ public class EnemySpawner : MonoBehaviour
         int spawnIndex = Random.Range(0, spawnPoints.Length);
         Transform spawnPoint = spawnPoints[spawnIndex];
 
-        // Randomize enemy type
-        int enemyIndex = Random.Range(0, enemyPrefabs.Length);
-        Instantiate(enemyPrefabs[enemyIndex], spawnPoint.position, spawnPoint.rotation);
+        // Enemy type spawned is only infantry first -  random after 1st wave
+        if (currentWave==1){
+            Instantiate(enemyPrefabs[0], spawnPoint.position, spawnPoint.rotation);
+        }
+        else{ 
+            int enemyIndex = Random.Range(0, enemyPrefabs.Length);
+            Instantiate(enemyPrefabs[enemyIndex], spawnPoint.position, spawnPoint.rotation);
+        }
     }
 }
