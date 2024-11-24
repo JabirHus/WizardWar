@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<< Updated upstream:Assets/TextMesh Pro/Examples & Extras/Fonts.meta
 guid: b63e0053080646b9819789bf3bf9fa17
+=======
+guid: 639d1f1aad966504594b97c684b0af95
+>>>>>>> Stashed changes:Assets/TextMesh Pro/TextMesh Pro/Shaders.meta
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}
