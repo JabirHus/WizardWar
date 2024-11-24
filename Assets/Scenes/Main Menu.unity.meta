@@ -1,5 +1,10 @@
 fileFormatVersion: 2
+<<<<<<<< Updated upstream:Assets/Scenes/Main Menu.unity.meta
 guid: 6330f3111c779be4b8c6102300386212
+========
+guid: 46d8aa435e88bbe45b29c53d7d8f3220
+folderAsset: yes
+>>>>>>>> Stashed changes:Assets/TextMesh Pro/TextMesh Pro/Sprites.meta
 DefaultImporter:
   externalObjects: {}
   userData: 
