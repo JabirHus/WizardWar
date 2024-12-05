@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class PlayerStats : MonoBehaviour
 {
-    public int skillPoints = 2;  // The player starts with 2 skill points
+    public int skillPoints = 200;  // The player starts with 2 skill points
 
     public event Action OnSkillPointsChanged;
 
@@ -17,9 +17,9 @@ public class PlayerStats : MonoBehaviour
 
     public bool SpendSkillPoint()
     {
-        if (skillPoints > 0)
+        if (skillPoints >= 200)
         {
-            skillPoints--;
+            skillPoints=skillPoints-200;
             OnSkillPointsChanged?.Invoke();
             Debug.Log("Skill point spent. Remaining skill points: " + skillPoints);
             return true;

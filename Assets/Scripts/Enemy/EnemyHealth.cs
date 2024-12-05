@@ -36,12 +36,12 @@ public class EnemyHealth : MonoBehaviour
         }
     }
 
-    // Destroy the enemy when health reaches 0
+    // Destroy the enemy when health reaches 0 and add skill points
     void Die()
     {
         if (playerStats != null)
         {
-            playerStats.AddSkillPoints(2);
+            playerStats.AddSkillPoints(50);
         }
 
         Destroy(gameObject);

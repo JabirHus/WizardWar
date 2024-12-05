@@ -6,7 +6,7 @@ public class TowerPlacementManager : MonoBehaviour
 {
     public GameObject towerPrefab;  // The tower prefab to place
     public PlayerStats playerStats; // Reference to the PlayerStats script
-    public int maxTowers = 5;  // Maximum number of towers allowed
+    public int maxTowers = 8;  // Maximum number of towers allowed
     private int currentTowerCount = 0; // Current number of towers placed
 
     void Update()
