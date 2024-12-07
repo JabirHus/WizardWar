@@ -35,7 +35,7 @@ public class FortressUI : MonoBehaviour
     {
         if (fortressHealthText != null)
         {
-            fortressHealthText.text = "FORTRESS HEALTH: " + MainTower.GetCurrentHealth();
+            fortressHealthText.text = "Fortress Health: " + MainTower.GetCurrentHealth();
         }
         else
         {

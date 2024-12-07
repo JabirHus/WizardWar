@@ -196,7 +196,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.5
+      scalar: 0.1
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -4919,7 +4919,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9026586269907784197}
   serializedVersion: 4
-  m_Mass: 1
+  m_Mass: 2
   m_Drag: 0
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -4933,7 +4933,7 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
@@ -4971,9 +4971,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46f210d574041974bbd3b1c731ebd7cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 2
-  healthBarPrefab: {fileID: 2106827567410422116, guid: 79089b5410df44b7b85bb93d06317ea2, type: 3}
+  maxHealth: 50
+  isEvilWizard: 0
+  GameOverPanel: {fileID: 0}
   playerStats: {fileID: 0}
+  healthBarPrefab: {fileID: 2106827567410422116, guid: 79089b5410df44b7b85bb93d06317ea2, type: 3}
 --- !u!114 &574986828878765128
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4986,7 +4988,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dbbb8300efe865f499a02f9794f47e45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 2
+  waypoints: []
+  speed: 10
   MainTower: {fileID: 0}
-  altitude: 40
+  altitude: 20
   damageToFortress: 20

@@ -38,7 +38,7 @@ public class Projectile : MonoBehaviour
 
     void HitTarget()
     {
-        // Check if the target has an EnemyHealth component
+        // Check if the target has an normal EnemyHealth component
         EnemyHealth enemyHealth = target.GetComponent<EnemyHealth>();
         if (enemyHealth != null)
         {

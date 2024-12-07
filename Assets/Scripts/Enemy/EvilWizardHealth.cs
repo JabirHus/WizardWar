@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyWizardHealth : MonoBehaviour
 {
-    public float maxHealth = 90f;  // Maximum health of the enemy
+    public float maxHealth = 20f;  // Maximum health of the enemy
     private float currentHealth;
 
     public GameObject GameOverPanel; // Reference to the Game Over Panel 

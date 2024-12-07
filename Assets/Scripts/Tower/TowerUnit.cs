@@ -7,7 +7,7 @@ public class TowerUnit : MonoBehaviour
     public GameObject projectilePrefab; // The projectile prefab
     public float fireRate = 1.0f; // Time between shots
     public float projectileSpeed = 10.0f; // Speed of the projectile
-    public float attackRange = 10.0f; // Range of the tower
+    public float attackRange = 30.0f; // Range of the tower
 
     private float fireCountdown = 0f;
     private Transform target;

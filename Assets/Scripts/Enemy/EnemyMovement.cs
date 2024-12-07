@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour
+public class EnemyMovement : MonoBehaviour
 {
-    public Transform[] waypoints;
+    public Transform[] path;  // assigned waypoint path
     private int currentWaypointIndex = 0;
     public float speed = 2f;
 
@@ -15,18 +15,18 @@ public class Enemy : MonoBehaviour
 
     void Start()
     {
-        waypoints = new Transform[3]; 
-        
-        waypoints[0] = GameObject.Find("Waypoint1").transform;
-        waypoints[1] = GameObject.Find("Waypoint2").transform;
-        waypoints[2] = GameObject.Find("Waypoint3").transform;
+        if (path == null || path.Length == 0)
+        {
+            Debug.Log("No path assigned or path is empty.");
+            Destroy(gameObject);
+        }
     }
 
     void Update()
     {
-        if (currentWaypointIndex < waypoints.Length)
+        if (currentWaypointIndex < path.Length)
         {
-            Transform targetWaypoint = waypoints[currentWaypointIndex];
+            Transform targetWaypoint = path[currentWaypointIndex];
             transform.position = Vector3.MoveTowards(transform.position, targetWaypoint.position, speed * Time.deltaTime);
 
             if (Vector3.Distance(transform.position, targetWaypoint.position) < 0.1f)

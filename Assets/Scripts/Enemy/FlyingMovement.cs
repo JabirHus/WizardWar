@@ -4,29 +4,42 @@ using UnityEngine;
 
 public class FlyingMovement : MonoBehaviour
 {
-    public float speed = 15f;
+    public Transform[] waypoints;
+    private int currentWaypointIndex = 0;
+    public float speed = 10f;
     public GameObject MainTower; // Reference to the central fortress
-    public float altitude = 50f; // Desired altitude
+    public float altitude = 20f; // Desired altitude
     public float damageToFortress = 20f; // Damage dealt to the fortress
 
+    void Start()
+    {
+        waypoints = new Transform[3]; 
 
-    void Start(){
-        if (MainTower != null){
-        
-            Vector3 targetPosition = new Vector3(MainTower.transform.position.x, altitude, MainTower.transform.position.z);
-
-            // Move toward the central fortress 
-            transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
-
-            //Face Main Tower
-            transform.LookAt(targetPosition);
-        }
-        else{
-            Debug.LogError("MainTower is not assigned");
-        }
+        waypoints[0] = GameObject.Find("Waypoint1").transform;
+        waypoints[1] = GameObject.Find("Waypoint2").transform;
+        waypoints[2] = GameObject.Find("Waypoint3").transform;
     }
 
+    void Update()
+    {
+        if (currentWaypointIndex < waypoints.Length)
+        {
+            Transform targetWaypoint = waypoints[currentWaypointIndex];
 
+            Vector3 targetPosition = targetWaypoint.position;
+            targetPosition.y = altitude; //  desired altitude set as target position
+
+            // Move the enemy towards the target position
+            transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
+            
+
+            // Check if the enemy has reached the waypoint
+            if (Vector3.Distance(transform.position, targetPosition) < 0.1f)
+            {
+                currentWaypointIndex++;
+            }
+        }
+    }
 
     // Check if the enemy collides with the MainTower
     private void OnTriggerEnter(Collider other)
