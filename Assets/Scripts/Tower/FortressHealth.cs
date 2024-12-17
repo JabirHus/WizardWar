@@ -8,6 +8,7 @@ public class FortressHealth : MonoBehaviour
     public float maxHealth = 100f;
     private float currentHealth;
     public GameObject GameOverPanel; // Reference to the Game Over Panel 
+    public Image healthBar;
 
     // Event to detect health changes
     public event Action OnHealthChanged;
@@ -25,7 +26,7 @@ public class FortressHealth : MonoBehaviour
         OnHealthChanged?.Invoke(); //Update to health display notification
 
         Debug.Log("Fortress Health: " + currentHealth);
-
+        healthBar.fillAmount = currentHealth / maxHealth;
 
         if (currentHealth <= 0)
         {
