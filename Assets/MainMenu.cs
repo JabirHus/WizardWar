@@ -8,6 +8,7 @@ public class MainMenu : MonoBehaviour
 {
     //References 
     public GameObject difficultyPanel; //loads when play button clicked
+    public GameObject instructionPanel;
     public Button playGame;
     public Button quitGame;
     public Button MediumButton; //to load gameplay
@@ -21,13 +22,22 @@ public class MainMenu : MonoBehaviour
         playGame.onClick.AddListener(OpenDifficultyPanel);
         quitGame.onClick.AddListener(QuitGame);
         MediumButton.onClick.AddListener(LoadMediumGame);
-
         difficultyPanel.SetActive(false); //hidden until play game button pressed
     }
 
     public void OpenDifficultyPanel()
     {
         difficultyPanel.SetActive(true); //hidden until play game button pressed
+    }
+
+    public void openInstructionPanel()
+    {
+        instructionPanel.SetActive(true);
+    }
+
+    public void closeInstructionsPanel()
+    {
+        instructionPanel.SetActive(false);
     }
 
     

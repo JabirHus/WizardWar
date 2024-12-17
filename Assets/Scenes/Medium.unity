@@ -821,6 +821,37 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3765458272154114122, guid: 78ed38066e81722428e15c47b9802e8f, type: 3}
   m_PrefabInstance: {fileID: 977457322}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &504632670
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 504632671}
+  m_Layer: 0
+  m_Name: NewSpawnWave
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &504632671
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 504632670}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 196.76773, y: 127.11733, z: 29.801214}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &522540704
 GameObject:
   m_ObjectHideFlags: 0
@@ -4499,3 +4530,4 @@ SceneRoots:
   - {fileID: 702385082}
   - {fileID: 645814106}
   - {fileID: 545146201}
+  - {fileID: 504632671}
