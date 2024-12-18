@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 4088163664949831391}
   - component: {fileID: 4785008104264907557}
   - component: {fileID: 8798004981322898082}
-  - component: {fileID: 1140620442629862265}
+  - component: {fileID: 1182547391081801857}
   m_Layer: 0
   m_Name: FireBall
   m_TagString: Untagged
@@ -4905,7 +4905,7 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
---- !u!114 &1140620442629862265
+--- !u!114 &1182547391081801857
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4914,7 +4914,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 8975570966265288618}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c862b97387fc044278f3f522d6ce59d6, type: 3}
+  m_Script: {fileID: 11500000, guid: a603c92fe317149918e712d1d9fd5567, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 20
+  damage: 25
+  burnDamage: 15
+  burnDuration: 3
+  burnRadius: 5
+  burnAreaPrefab: {fileID: 5682424981145770574, guid: fa9e06b9789e7451f9c4e45eb7d4c350, type: 3}

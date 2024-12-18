@@ -63,7 +63,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 2f1a8f5ae08684a9aabb50a575f473ca, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -121,6 +121,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   projectilePrefab: {fileID: 8975570966265288618, guid: b11bb0b2adc104fa48fd32cc9630cd2c, type: 3}
-  fireRate: 1
-  projectileSpeed: 15
-  attackRange: 40
+  fireRate: 0.8
+  projectileSpeed: 17
+  attackRange: 43

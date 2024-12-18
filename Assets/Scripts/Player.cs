@@ -1,32 +1,29 @@
-using System.Collections;
-using System.Collections.Generic;
 using System;
 using UnityEngine;
 
 public class PlayerStats : MonoBehaviour
 {
-    public int skillPoints = 100;  // The player starts with 2 skill points
-
+    public int skillPoints = 100; // Starting skill points
     public event Action OnSkillPointsChanged;
 
     void Start()
     {
-        // Initial notification of the skill points
+        // Notify listeners of the initial skill points
         OnSkillPointsChanged?.Invoke();
     }
 
-    public bool SpendSkillPoint()
+    public bool SpendSkillPoints(int cost)
     {
-        if (skillPoints >= 100)
+        if (skillPoints >= cost)
         {
-            skillPoints=skillPoints-100;
+            skillPoints -= cost;
             OnSkillPointsChanged?.Invoke();
-            Debug.Log("Skill point spent. Remaining skill points: " + skillPoints);
+            Debug.Log($"Spent {cost} skill points. Remaining skill points: {skillPoints}");
             return true;
         }
         else
         {
-            Debug.Log("No skill points remaining.");
+            Debug.Log($"Not enough skill points! Required: {cost}, Available: {skillPoints}");
             return false;
         }
     }
@@ -35,7 +32,6 @@ public class PlayerStats : MonoBehaviour
     {
         skillPoints += amount;
         OnSkillPointsChanged?.Invoke();
-        Debug.Log(amount + " skill points added. Total skill points: " + skillPoints);
+        Debug.Log($"{amount} skill points added. Total skill points: {skillPoints}");
     }
 }
-

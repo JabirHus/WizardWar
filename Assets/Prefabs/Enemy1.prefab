@@ -124,6 +124,8 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   speed: 2
+  MainTower: {fileID: 0}
+  damageToFortress: 10
 --- !u!114 &-2176159519872261566
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -137,3 +139,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 10
+  healthBarPrefab: {fileID: 0}
+  playerStats: {fileID: 0}
