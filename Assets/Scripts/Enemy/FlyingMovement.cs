@@ -20,16 +20,22 @@ public class FlyingMovement : MonoBehaviour
         waypoints[2] = GameObject.Find("Waypoint3").transform;
     }
 
+
     void Update()
     {
         if (currentWaypointIndex < waypoints.Length)
         {
             Transform targetWaypoint = waypoints[currentWaypointIndex];
-
             Vector3 targetPosition = targetWaypoint.position;
-            targetPosition.y = altitude; //  desired altitude set as target position
+            targetPosition.y = altitude; // Keep altitude consistent
 
-            // Move the enemy towards the target position
+            // Rotate smoothly towards the target
+            Vector3 direction = (targetPosition - transform.position).normalized;
+            Quaternion lookRotation = Quaternion.LookRotation(direction);
+            transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * speed);
+
+
+            // Move the enemy towards the target position 
             transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
             
 

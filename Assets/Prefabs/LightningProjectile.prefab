@@ -14,9 +14,9 @@ GameObject:
   - component: {fileID: 4088163664949831391}
   - component: {fileID: 4785008104264907557}
   - component: {fileID: 8798004981322898082}
-  - component: {fileID: 3213344879627922922}
+  - component: {fileID: -7929512261368030953}
   m_Layer: 0
-  m_Name: FireBall
+  m_Name: LightningProjectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -65,7 +65,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: ab3103d64675a12459d07b585c7b0912, type: 2}
+  - {fileID: 2100000, guid: fa828a2a51ece43bcb3c1063b7f17ce1, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4905,7 +4905,7 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
---- !u!114 &3213344879627922922
+--- !u!114 &-7929512261368030953
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4914,11 +4914,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 8975570966265288618}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a603c92fe317149918e712d1d9fd5567, type: 3}
+  m_Script: {fileID: 11500000, guid: 523d338fb237745ca954407d0218fce2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 10
-  burnDamage: 5
-  burnDuration: 3
-  burnRadius: 5
-  burnAreaPrefab: {fileID: 5682424981145770574, guid: fa9e06b9789e7451f9c4e45eb7d4c350, type: 3}
+  damage: 35
+  chainRadius: 20
+  chainDamage: 20
+  maxChains: 3
+  lightningBurstEffect: {fileID: 2989874916602676939, guid: 7331d92e053674be0b8d6724c7ad90f1, type: 3}

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Projectile : MonoBehaviour
+public class FireAttack1 : MonoBehaviour
 {
     private Transform target;
     private float speed;
