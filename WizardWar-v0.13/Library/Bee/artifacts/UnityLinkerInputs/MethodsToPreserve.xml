@@ -1,0 +1,22 @@
+<linker>
+	<assembly fullname="Assembly-CSharp" ignoreIfMissing="1">
+		<type fullname="GameOver">
+			<method name="GoToMainMenu"/>
+			<method name="GoToMainMenu"/>
+			<method name="restartGame"/>
+			<method name="restartGame"/>
+		</type>
+		<type fullname="MainMenu">
+			<method name="LoadMediumGame"/>
+			<method name="OpenDifficultyPanel"/>
+			<method name="QuitGame"/>
+		</type>
+		<type fullname="TowerPlacementManager">
+			<method name="CancelPopup"/>
+			<method name="DeployFireTower"/>
+			<method name="DeployIceTower"/>
+			<method name="DeployLightningTower"/>
+			<method name="DeployPhysicalTower"/>
+		</type>
+	</assembly>
+</linker>
