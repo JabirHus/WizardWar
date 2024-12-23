@@ -24,14 +24,22 @@ public class TowerPlacementManager : MonoBehaviour
 
     [Header("Placement Settings")]
     public GameObject placementIndicatorPrefab; // Hover indicator prefab
+    public GameObject rangeIndicatorPrefab; // Attack range prefab
+    public Material rangeIndicatorMaterial; // Transparent grey material
     public Color validPlacementColor = Color.green;
     public Color invalidPlacementColor = Color.red;
     public Color lockedPlacementColor = Color.yellow;
 
+    [Header("Range Indicator Settings")]
     public float placementRadius = 1.0f;
+    public float defaultTowerRange = 5.0f; // Default range visualization size
+    public float rangeIndicatorHeight = 0.3f; // Height adjustment for range indicator
+    public float rangeIndicatorTransparency = 0.5f; // Default transparency
 
     private GameObject currentIndicator; // Hover indicator
+    private GameObject rangeIndicator; // Range visualization
     private Renderer indicatorRenderer;
+    private Renderer rangeRenderer;
     private Vector3 towerPlacementPosition;
 
     private bool isPlacementLocked = false; // Prevent hover updates during UI
@@ -39,6 +47,7 @@ public class TowerPlacementManager : MonoBehaviour
     void Start()
     {
         SetupPlacementIndicator();
+        SetupRangeIndicator();
     }
 
     void Update()
@@ -63,6 +72,41 @@ public class TowerPlacementManager : MonoBehaviour
         currentIndicator.SetActive(false);
     }
 
+    private void SetupRangeIndicator()
+    {
+        rangeIndicator = Instantiate(rangeIndicatorPrefab);
+        rangeRenderer = rangeIndicator.GetComponentInChildren<Renderer>();
+
+        if (rangeRenderer == null)
+        {
+            Debug.LogError("Renderer not found on RangeIndicator prefab or its children!");
+        }
+
+        if (rangeIndicatorMaterial != null)
+        {
+            rangeRenderer.material = rangeIndicatorMaterial;
+            SetRangeIndicatorTransparency(rangeIndicatorTransparency);
+        }
+
+        UpdateRangeIndicatorSize(defaultTowerRange);
+        rangeIndicator.SetActive(false);
+    }
+
+    private void UpdateRangeIndicatorSize(float radius)
+    {
+        rangeIndicator.transform.localScale = new Vector3(radius * 2, 0.1f, radius * 2);
+    }
+
+    private void SetRangeIndicatorTransparency(float alpha)
+    {
+        if (rangeRenderer != null)
+        {
+            Color color = rangeRenderer.material.color;
+            color.a = alpha;
+            rangeRenderer.material.color = color;
+        }
+    }
+
     private void HandlePlacementHover()
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -70,39 +114,53 @@ public class TowerPlacementManager : MonoBehaviour
         {
             towerPlacementPosition = hit.point;
             currentIndicator.SetActive(true);
+            rangeIndicator.SetActive(true);
+
             currentIndicator.transform.position = towerPlacementPosition + Vector3.up * 0.05f;
+            rangeIndicator.transform.position = towerPlacementPosition + Vector3.up * rangeIndicatorHeight;
 
             if (IsPlacementAreaOccupied())
             {
                 indicatorRenderer.material.color = invalidPlacementColor;
+                if (rangeRenderer != null)
+                    rangeRenderer.material.color = invalidPlacementColor;
             }
             else
             {
                 indicatorRenderer.material.color = validPlacementColor;
+                if (rangeRenderer != null)
+                    rangeRenderer.material.color = validPlacementColor;
             }
         }
         else
         {
             currentIndicator.SetActive(false);
+            rangeIndicator.SetActive(false);
         }
     }
 
     private void HandleMouseClick()
     {
+        // Enforce max tower limit
+        if (currentTowerCount >= maxTowers)
+        {
+            Debug.Log("Maximum number of towers reached. Cannot place more towers.");
+            return;
+        }
+
         if (IsPlacementAreaOccupied())
         {
             Debug.Log("Cannot place a tower here. Area is occupied.");
             return;
         }
 
-        // Lock placement indicator and show UI
         isPlacementLocked = true;
         indicatorRenderer.material.color = lockedPlacementColor;
+        rangeIndicator.SetActive(false);
 
-        // Show Popup UI
         popupPanel.transform.position = new Vector3(Screen.width / 2, Screen.height / 2, 0);
         popupPanel.SetActive(true);
-        Time.timeScale = 0f; // Pause game
+        Time.timeScale = 0f;
     }
 
     #endregion
@@ -142,33 +200,25 @@ public class TowerPlacementManager : MonoBehaviour
         if (!playerStats.SpendSkillPoints(cost))
         {
             Debug.Log("Not enough skill points to place the tower.");
-            popupPanel.SetActive(false); // Hide popup
-            Time.timeScale = 1f; // Resume game
-            isPlacementLocked = false;
+            CancelPopup();
             return false;
         }
 
-        // Place the tower
         Instantiate(towerPrefab, towerPlacementPosition + Vector3.up * 0.05f, Quaternion.identity);
         currentTowerCount++;
-        Debug.Log($"Tower placed successfully. Total towers: {currentTowerCount}");
+        Debug.Log("Tower placed successfully. Total towers: " + currentTowerCount);
 
-        // Reset placement state
-        popupPanel.SetActive(false);
-        Time.timeScale = 1f; // Resume game
-        isPlacementLocked = false;
-
-        // Mark area as permanently occupied
-        indicatorRenderer.material.color = invalidPlacementColor;
+        CancelPopup();
         return true;
     }
 
     public void CancelPopup()
     {
-        // Hide the popup without deploying a tower
         popupPanel.SetActive(false);
-        Time.timeScale = 1f; // Resume the game
+        Time.timeScale = 1f;
         isPlacementLocked = false;
+        currentIndicator.SetActive(false);
+        rangeIndicator.SetActive(false);
     }
 
     #endregion
@@ -182,7 +232,7 @@ public class TowerPlacementManager : MonoBehaviour
         {
             if (collider.CompareTag("Tower"))
             {
-                return true; // Area is occupied
+                return true;
             }
         }
         return false;
