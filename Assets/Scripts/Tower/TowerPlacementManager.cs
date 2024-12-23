@@ -46,6 +46,14 @@ public class TowerPlacementManager : MonoBehaviour
 
     void Start()
     {
+        // Disable the script at the start
+        enabled = false;
+        Invoke(nameof(EnableScript), 5f); // Enable the script after 5 seconds
+    }
+
+    private void EnableScript()
+    {
+        enabled = true; // Reactivate the script
         SetupPlacementIndicator();
         SetupRangeIndicator();
     }
