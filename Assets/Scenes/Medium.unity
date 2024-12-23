@@ -2514,6 +2514,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Path (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 3656959783064690421, guid: 78ed38066e81722428e15c47b9802e8f, type: 3}
+      propertyPath: m_TagString
+      value: NoBuildZone
+      objectReference: {fileID: 0}
     - target: {fileID: 3765458272154114122, guid: 78ed38066e81722428e15c47b9802e8f, type: 3}
       propertyPath: m_LocalScale.x
       value: 14.86741
@@ -3012,6 +3016,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Path (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 3656959783064690421, guid: 78ed38066e81722428e15c47b9802e8f, type: 3}
+      propertyPath: m_TagString
+      value: NoBuildZone
+      objectReference: {fileID: 0}
     - target: {fileID: 3765458272154114122, guid: 78ed38066e81722428e15c47b9802e8f, type: 3}
       propertyPath: m_LocalScale.x
       value: 12
@@ -3360,6 +3368,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Path (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 3656959783064690421, guid: 78ed38066e81722428e15c47b9802e8f, type: 3}
+      propertyPath: m_TagString
+      value: NoBuildZone
+      objectReference: {fileID: 0}
     - target: {fileID: 3765458272154114122, guid: 78ed38066e81722428e15c47b9802e8f, type: 3}
       propertyPath: m_LocalScale.x
       value: 26.450592
@@ -3426,9 +3438,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1051055810}
+  - component: {fileID: 1051055811}
   m_Layer: 0
   m_Name: Pathways
-  m_TagString: Untagged
+  m_TagString: NoBuildZone
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3453,6 +3466,27 @@ Transform:
   - {fileID: 1917336123}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &1051055811
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1051055809}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1055303839
 GameObject:
   m_ObjectHideFlags: 0
@@ -4053,6 +4087,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1253845940}
   - component: {fileID: 1253845939}
+  - component: {fileID: 1253845942}
+  - component: {fileID: 1253845941}
   m_Layer: 0
   m_Name: TowerManager
   m_TagString: Untagged
@@ -4083,6 +4119,16 @@ MonoBehaviour:
   fireTowerCost: 100
   iceTowerCost: 150
   lightningTowerCost: 200
+  placementIndicatorPrefab: {fileID: 8606444310156479780, guid: 584996c5e46b5ea4183868d63d10a0de, type: 3}
+  rangeIndicatorPrefab: {fileID: 6999333172017744255, guid: ac2bb09da36eee94b9fb06fa4febf0e1, type: 3}
+  rangeIndicatorMaterial: {fileID: 2100000, guid: e163164580efdaf4e9912db4fc25fc3b, type: 2}
+  validPlacementColor: {r: 0, g: 1, b: 0, a: 1}
+  invalidPlacementColor: {r: 1, g: 0, b: 0, a: 1}
+  lockedPlacementColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  placementRadius: 1
+  defaultTowerRange: 36
+  rangeIndicatorHeight: 0.3
+  rangeIndicatorTransparency: 0.5
 --- !u!4 &1253845940
 Transform:
   m_ObjectHideFlags: 0
@@ -4098,6 +4144,56 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!136 &1253845941
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1253845938}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 1
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!54 &1253845942
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1253845938}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 0
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0
 --- !u!1 &1304606008
 GameObject:
   m_ObjectHideFlags: 0
@@ -5326,6 +5422,10 @@ PrefabInstance:
     - target: {fileID: 3656959783064690421, guid: 78ed38066e81722428e15c47b9802e8f, type: 3}
       propertyPath: m_Name
       value: Path (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3656959783064690421, guid: 78ed38066e81722428e15c47b9802e8f, type: 3}
+      propertyPath: m_TagString
+      value: NoBuildZone
       objectReference: {fileID: 0}
     - target: {fileID: 3765458272154114122, guid: 78ed38066e81722428e15c47b9802e8f, type: 3}
       propertyPath: m_LocalScale.x
@@ -7415,6 +7515,10 @@ PrefabInstance:
     - target: {fileID: 3656959783064690421, guid: 78ed38066e81722428e15c47b9802e8f, type: 3}
       propertyPath: m_Name
       value: Path
+      objectReference: {fileID: 0}
+    - target: {fileID: 3656959783064690421, guid: 78ed38066e81722428e15c47b9802e8f, type: 3}
+      propertyPath: m_TagString
+      value: NoBuildZone
       objectReference: {fileID: 0}
     - target: {fileID: 3765458272154114122, guid: 78ed38066e81722428e15c47b9802e8f, type: 3}
       propertyPath: m_LocalScale.x
