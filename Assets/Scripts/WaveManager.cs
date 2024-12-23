@@ -24,6 +24,7 @@ public class WaveManager : MonoBehaviour
     public int enemiesPerWave = 3; 
     public float timeBetweenWaves = 25f; // Delay between waves
     public float spawnInterval = 2f; // Time between enemy spawns in a wave
+    private float waitUntilCameraAnimationCompletes = 5f;
 
     private int currentWave = 1; 
     private int enemiesSpawnedInWave = 0; 
@@ -40,7 +41,11 @@ public class WaveManager : MonoBehaviour
     }
 
     private IEnumerator SpawnWave()
-    {
+    {   
+        if (currentWave == 1)
+        {
+            yield return new WaitForSeconds(waitUntilCameraAnimationCompletes);
+        }
         while (currentWave <= maxWaves)
         {
             Debug.Log("Starting Wave: " + currentWave);

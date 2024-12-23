@@ -101,7 +101,7 @@ public class TowerUnit : MonoBehaviour
         }
 
         // Check for regular Projectile script
-        Projectile projectileScript = projectileInstance.GetComponent<Projectile>();
+        ProjectileBehaviour projectileScript = projectileInstance.GetComponent<ProjectileBehaviour>();
         if (projectileScript != null)
         {
             projectileScript.Seek(target, projectileSpeed);

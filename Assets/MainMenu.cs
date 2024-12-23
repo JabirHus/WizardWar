@@ -30,11 +30,13 @@ public class MainMenu : MonoBehaviour
         difficultyPanel.SetActive(true); //hidden until play game button pressed
     }
 
+    // method called when instruction button is called
     public void openInstructionPanel()
     {
         instructionPanel.SetActive(true);
     }
 
+    // method called to close when "X" button is pressed
     public void closeInstructionsPanel()
     {
         instructionPanel.SetActive(false);
