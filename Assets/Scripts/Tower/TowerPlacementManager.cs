@@ -238,13 +238,21 @@ public class TowerPlacementManager : MonoBehaviour
         Collider[] colliders = Physics.OverlapSphere(towerPlacementPosition, placementRadius);
         foreach (Collider collider in colliders)
         {
+            // Check if it's a Tower
             if (collider.CompareTag("Tower"))
             {
-                return true;
+                return true; // Area is occupied by a tower
+            }
+
+            // Check if it's a No-Build Zone
+            if (collider.CompareTag("NoBuildZone"))
+            {
+                return true; // Area is a restricted zone
             }
         }
-        return false;
+        return false; // Area is clear
     }
+
 
     #endregion
 }
