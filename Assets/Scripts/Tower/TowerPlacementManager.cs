@@ -115,6 +115,26 @@ public class TowerPlacementManager : MonoBehaviour
         }
     }
 
+    private bool IsPlacementColliding()
+    {
+        Collider[] colliders = Physics.OverlapSphere(
+            new Vector3(towerPlacementPosition.x, towerPlacementPosition.y, towerPlacementPosition.z),
+            placementRadius
+        );
+
+        foreach (Collider collider in colliders)
+        {
+            if (collider.CompareTag("NoBuildZone") || collider.CompareTag("Tower") || collider.CompareTag("Enemy"))
+            {
+                Debug.Log($"Collision detected with: {collider.gameObject.name}");
+                return true; // Found an obstruction or invalid area
+            }
+        }
+
+        return false; // No collision detected
+    }
+
+
     private void HandlePlacementHover()
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -124,17 +144,31 @@ public class TowerPlacementManager : MonoBehaviour
             currentIndicator.SetActive(true);
             rangeIndicator.SetActive(true);
 
-            currentIndicator.transform.position = towerPlacementPosition + Vector3.up * 0.05f;
-            rangeIndicator.transform.position = towerPlacementPosition + Vector3.up * rangeIndicatorHeight;
+            // Set fixed Y-axis height for the indicator
+            float fixedYHeight = 0.5f; // Adjust this value as needed
+            currentIndicator.transform.position = new Vector3(
+                towerPlacementPosition.x,
+                fixedYHeight,
+                towerPlacementPosition.z
+            );
 
-            if (IsPlacementAreaOccupied())
+            rangeIndicator.transform.position = new Vector3(
+                towerPlacementPosition.x,
+                fixedYHeight + rangeIndicatorHeight,
+                towerPlacementPosition.z
+            );
+
+            // Check for collision or invalid placement
+            if (IsPlacementAreaOccupied() || IsPlacementColliding())
             {
+                // Invalid placement (Red indicator)
                 indicatorRenderer.material.color = invalidPlacementColor;
                 if (rangeRenderer != null)
                     rangeRenderer.material.color = invalidPlacementColor;
             }
             else
             {
+                // Valid placement (Green indicator)
                 indicatorRenderer.material.color = validPlacementColor;
                 if (rangeRenderer != null)
                     rangeRenderer.material.color = validPlacementColor;
@@ -146,6 +180,7 @@ public class TowerPlacementManager : MonoBehaviour
             rangeIndicator.SetActive(false);
         }
     }
+
 
     private void HandleMouseClick()
     {
