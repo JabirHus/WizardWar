@@ -63,7 +63,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 0f42a1e6a23b5d64380e925ffd5da562, type: 2}
+  - {fileID: 2100000, guid: 2f1a8f5ae08684a9aabb50a575f473ca, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -120,7 +120,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 159a861d442374868a390101bc7c702e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projectilePrefab: {fileID: 8975570966265288618, guid: f799f4b4f1fa79e45a2e7eef22beae24, type: 3}
+  projectilePrefab: {fileID: 8975570966265288618, guid: b415c42ea200f624789171582a0748bf, type: 3}
   fireRate: 1
   projectileSpeed: 15
   attackRange: 40
