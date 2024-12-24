@@ -1477,8 +1477,8 @@ MonoBehaviour:
   - {fileID: 1055303840}
   maxWaves: 4
   enemiesPerWave: 5
-  timeBetweenWaves: 25
-  spawnInterval: 2
+  timeBetweenWaves: 20
+  spawnInterval: 1.4
 --- !u!1 &675110881
 GameObject:
   m_ObjectHideFlags: 0
@@ -7139,6 +7139,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2257407058549981317, guid: 618f6d866a0472e43baa58ba5ab64095, type: 3}
+      propertyPath: maxHealth
+      value: 1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 2257407058549981317, guid: 618f6d866a0472e43baa58ba5ab64095, type: 3}
       propertyPath: playerStats
       value: 
       objectReference: {fileID: 2050212453}
@@ -7152,7 +7156,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7657363478568835311, guid: 618f6d866a0472e43baa58ba5ab64095, type: 3}
       propertyPath: speed
-      value: 5
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 7657363478568835311, guid: 618f6d866a0472e43baa58ba5ab64095, type: 3}
       propertyPath: MainTower
@@ -7245,7 +7249,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8165783799949137954, guid: ea9d4a1df030ce240bbccb1020106014, type: 3}
       propertyPath: speed
-      value: 6
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 8165783799949137954, guid: ea9d4a1df030ce240bbccb1020106014, type: 3}
       propertyPath: MainTower
@@ -7294,7 +7298,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 574986828878765128, guid: 4b23998cbce82e5458b640c8a4a1f41b, type: 3}
       propertyPath: speed
-      value: 7
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 574986828878765128, guid: 4b23998cbce82e5458b640c8a4a1f41b, type: 3}
       propertyPath: MainTower
@@ -7459,7 +7463,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3605220050758119550, guid: 4bc4ed2d80e344f4b9065436061c54e7, type: 3}
       propertyPath: speed
-      value: 10
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 3605220050758119550, guid: 4bc4ed2d80e344f4b9065436061c54e7, type: 3}
       propertyPath: MainTower
