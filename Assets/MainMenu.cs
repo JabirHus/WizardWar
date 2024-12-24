@@ -9,6 +9,7 @@ public class MainMenu : MonoBehaviour
     //References 
     public GameObject difficultyPanel; //loads when play button clicked
     public GameObject instructionPanel;
+    public GameObject settingsPanel;
     public Button playGame;
     public Button quitGame;
     public Button MediumButton; //to load gameplay
@@ -42,7 +43,18 @@ public class MainMenu : MonoBehaviour
         instructionPanel.SetActive(false);
     }
 
-    
+    public void openSettingsPanel()
+    {
+        settingsPanel.SetActive(true);
+    }
+
+    // method called to close when "X" button is pressed
+    public void closeSettingsPanel()
+    {
+        settingsPanel.SetActive(false);
+    }
+
+
     public void LoadMediumGame()
     {
         SceneManager.LoadScene("Medium");

@@ -43,10 +43,10 @@ public class TowerPlacementManager : MonoBehaviour
     private Vector3 towerPlacementPosition;
 
     private bool isPlacementLocked = false; // Prevent hover updates during UI
+    private bool maxTowersReached = false; // Lock placement after max towers
 
     void Start()
     {
-        // Disable the script at the start
         enabled = false;
         Invoke(nameof(EnableScript), 5f); // Enable the script after 5 seconds
     }
@@ -60,6 +60,12 @@ public class TowerPlacementManager : MonoBehaviour
 
     void Update()
     {
+        if (maxTowersReached)
+        {
+            DisableIndicators();
+            return;
+        }
+
         if (!isPlacementLocked)
         {
             HandlePlacementHover();
@@ -117,11 +123,7 @@ public class TowerPlacementManager : MonoBehaviour
 
     private bool IsPlacementColliding()
     {
-        Collider[] colliders = Physics.OverlapSphere(
-            new Vector3(towerPlacementPosition.x, towerPlacementPosition.y, towerPlacementPosition.z),
-            placementRadius
-        );
-
+        Collider[] colliders = Physics.OverlapSphere(towerPlacementPosition, placementRadius);
         foreach (Collider collider in colliders)
         {
             if (collider.CompareTag("NoBuildZone") || collider.CompareTag("Tower") || collider.CompareTag("Enemy"))
@@ -130,10 +132,21 @@ public class TowerPlacementManager : MonoBehaviour
                 return true; // Found an obstruction or invalid area
             }
         }
-
         return false; // No collision detected
     }
 
+    private bool IsPlacementAreaOccupied()
+    {
+        Collider[] colliders = Physics.OverlapSphere(towerPlacementPosition, placementRadius);
+        foreach (Collider collider in colliders)
+        {
+            if (collider.CompareTag("Tower") || collider.CompareTag("NoBuildZone"))
+            {
+                return true; // Placement area is occupied
+            }
+        }
+        return false; // Placement area is free
+    }
 
     private void HandlePlacementHover()
     {
@@ -144,34 +157,19 @@ public class TowerPlacementManager : MonoBehaviour
             currentIndicator.SetActive(true);
             rangeIndicator.SetActive(true);
 
-            // Set fixed Y-axis height for the indicator
-            float fixedYHeight = 0.5f; // Adjust this value as needed
-            currentIndicator.transform.position = new Vector3(
-                towerPlacementPosition.x,
-                fixedYHeight,
-                towerPlacementPosition.z
-            );
+            float fixedYHeight = 0.5f; // Fixed height for indicators
+            currentIndicator.transform.position = new Vector3(towerPlacementPosition.x, fixedYHeight, towerPlacementPosition.z);
+            rangeIndicator.transform.position = new Vector3(towerPlacementPosition.x, fixedYHeight + rangeIndicatorHeight, towerPlacementPosition.z);
 
-            rangeIndicator.transform.position = new Vector3(
-                towerPlacementPosition.x,
-                fixedYHeight + rangeIndicatorHeight,
-                towerPlacementPosition.z
-            );
-
-            // Check for collision or invalid placement
             if (IsPlacementAreaOccupied() || IsPlacementColliding())
             {
-                // Invalid placement (Red indicator)
                 indicatorRenderer.material.color = invalidPlacementColor;
-                if (rangeRenderer != null)
-                    rangeRenderer.material.color = invalidPlacementColor;
+                rangeRenderer.material.color = invalidPlacementColor;
             }
             else
             {
-                // Valid placement (Green indicator)
                 indicatorRenderer.material.color = validPlacementColor;
-                if (rangeRenderer != null)
-                    rangeRenderer.material.color = validPlacementColor;
+                rangeRenderer.material.color = validPlacementColor;
             }
         }
         else
@@ -181,19 +179,18 @@ public class TowerPlacementManager : MonoBehaviour
         }
     }
 
-
     private void HandleMouseClick()
     {
-        // Enforce max tower limit
         if (currentTowerCount >= maxTowers)
         {
             Debug.Log("Maximum number of towers reached. Cannot place more towers.");
+            DisableIndicators();
             return;
         }
 
-        if (IsPlacementAreaOccupied())
+        if (IsPlacementAreaOccupied() || IsPlacementColliding())
         {
-            Debug.Log("Cannot place a tower here. Area is occupied.");
+            Debug.Log("Cannot place a tower here. Area is occupied or invalid.");
             return;
         }
 
@@ -212,30 +209,22 @@ public class TowerPlacementManager : MonoBehaviour
 
     public void DeployPhysicalTower()
     {
-        DeployTower(physicalTowerPrefab, physicalTowerCost, "Physical tower deployed!");
+        PlaceTower(physicalTowerPrefab, physicalTowerCost);
     }
 
     public void DeployFireTower()
     {
-        DeployTower(fireTowerPrefab, fireTowerCost, "Fire tower deployed!");
+        PlaceTower(fireTowerPrefab, fireTowerCost);
     }
 
     public void DeployIceTower()
     {
-        DeployTower(iceTowerPrefab, iceTowerCost, "Ice tower deployed!");
+        PlaceTower(iceTowerPrefab, iceTowerCost);
     }
 
     public void DeployLightningTower()
     {
-        DeployTower(lightningTowerPrefab, lightningTowerCost, "Lightning tower deployed!");
-    }
-
-    private void DeployTower(GameObject towerPrefab, int cost, string successMessage)
-    {
-        if (PlaceTower(towerPrefab, cost))
-        {
-            Debug.Log(successMessage);
-        }
+        PlaceTower(lightningTowerPrefab, lightningTowerCost);
     }
 
     private bool PlaceTower(GameObject towerPrefab, int cost)
@@ -249,7 +238,12 @@ public class TowerPlacementManager : MonoBehaviour
 
         Instantiate(towerPrefab, towerPlacementPosition + Vector3.up * 0.05f, Quaternion.identity);
         currentTowerCount++;
-        Debug.Log("Tower placed successfully. Total towers: " + currentTowerCount);
+
+        if (currentTowerCount >= maxTowers)
+        {
+            maxTowersReached = true;
+            DisableIndicators();
+        }
 
         CancelPopup();
         return true;
@@ -264,30 +258,12 @@ public class TowerPlacementManager : MonoBehaviour
         rangeIndicator.SetActive(false);
     }
 
-    #endregion
-
-    #region Validation Logic
-
-    private bool IsPlacementAreaOccupied()
+    private void DisableIndicators()
     {
-        Collider[] colliders = Physics.OverlapSphere(towerPlacementPosition, placementRadius);
-        foreach (Collider collider in colliders)
-        {
-            // Check if it's a Tower
-            if (collider.CompareTag("Tower"))
-            {
-                return true; // Area is occupied by a tower
-            }
-
-            // Check if it's a No-Build Zone
-            if (collider.CompareTag("NoBuildZone"))
-            {
-                return true; // Area is a restricted zone
-            }
-        }
-        return false; // Area is clear
+        currentIndicator.SetActive(false);
+        rangeIndicator.SetActive(false);
+        isPlacementLocked = true;
     }
-
 
     #endregion
 }

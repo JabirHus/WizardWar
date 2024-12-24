@@ -123,7 +123,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   projectilePrefab: {fileID: 8975570966265288618, guid: ebc823e861d4e46ae8746bdb95b76164, type: 3}
   fireRate: 1
-  projectileSpeed: 15
+  projectileSpeed: 30
   attackRange: 40
 --- !u!54 &-1745549725744059726
 Rigidbody:
