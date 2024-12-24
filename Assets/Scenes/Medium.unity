@@ -7316,6 +7316,10 @@ PrefabInstance:
       propertyPath: 'waypoints.Array.data[2]'
       value: 
       objectReference: {fileID: 395385925}
+    - target: {fileID: 4459432987186340640, guid: 4b23998cbce82e5458b640c8a4a1f41b, type: 3}
+      propertyPath: m_IsKinematic
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5224608944488243501, guid: 4b23998cbce82e5458b640c8a4a1f41b, type: 3}
       propertyPath: m_LocalPosition.x
       value: 346.66248
@@ -7364,6 +7368,10 @@ PrefabInstance:
       propertyPath: GameOverPanel
       value: 
       objectReference: {fileID: 1089808497}
+    - target: {fileID: 6682899600667639357, guid: 4b23998cbce82e5458b640c8a4a1f41b, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 9026586269907784197, guid: 4b23998cbce82e5458b640c8a4a1f41b, type: 3}
       propertyPath: m_Name
       value: FlyingWizard
