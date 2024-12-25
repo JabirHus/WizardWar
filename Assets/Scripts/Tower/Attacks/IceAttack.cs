@@ -39,16 +39,19 @@ public class IceProjectile : MonoBehaviour
     void HitTarget()
     {
         // Deal damage and apply the slow effect
-        Enemy enemy = target.GetComponent<Enemy>();
-        if (enemy != null)
+        // Apply slow effect and damage
+        EnemyMovement movement = target.GetComponent<EnemyMovement>();
+        if (movement != null)
         {
-            enemy.ApplySlow(slowMultiplier, slowDuration); // Apply the slow effect
-            EnemyHealth enemyHealth = enemy.GetComponent<EnemyHealth>();
-            if (enemyHealth != null)
-            {
-                enemyHealth.TakeDamage(damage); // Apply damage
-            }
+            movement.ApplySlow(slowMultiplier, slowDuration);
         }
+
+        EnemyHealth health = target.GetComponent<EnemyHealth>();
+        if (health != null)
+        {
+            health.TakeDamage(damage);
+        }
+
 
         Destroy(gameObject); // Destroy the projectile after impact
     }

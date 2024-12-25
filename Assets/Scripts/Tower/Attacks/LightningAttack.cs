@@ -41,13 +41,13 @@ public class LightningProjectile : MonoBehaviour
         transform.Translate(direction.normalized * distanceThisFrame, Space.World);
     }
 
-    void HitTarget()
+  void HitTarget()
     {
-        // Apply damage to the main target
-        Enemy enemy = target.GetComponent<Enemy>();
-        if (enemy != null)
+        // Apply damage to the main target directly through EnemyHealth component
+        EnemyHealth enemyHealth = target.GetComponent<EnemyHealth>();
+        if (enemyHealth != null)
         {
-            enemy.GetComponent<EnemyHealth>()?.TakeDamage(damage); // Apply damage
+            enemyHealth.TakeDamage(damage); // Apply damage
         }
 
         // Spawn the lightning burst visual effect
@@ -73,22 +73,23 @@ public class LightningProjectile : MonoBehaviour
         {
             if (collider.CompareTag("Enemy") && chainsLeft > 0)
             {
-                // Damage each enemy in the chain radius
-                Enemy chainedEnemy = collider.GetComponent<Enemy>();
-                if (chainedEnemy != null && chainedEnemy != target)
+                // Damage each enemy in the chain radius directly through EnemyHealth component
+                EnemyHealth chainedEnemyHealth = collider.GetComponent<EnemyHealth>();
+                if (chainedEnemyHealth != null && chainedEnemyHealth != target.GetComponent<EnemyHealth>())
                 {
-                    chainedEnemy.GetComponent<EnemyHealth>()?.TakeDamage(chainDamage);
+                    chainedEnemyHealth.TakeDamage(chainDamage);
                     chainsLeft--;
 
                     // Optionally spawn visual effects on chained enemies
                     if (lightningBurstEffect != null)
                     {
-                        Instantiate(lightningBurstEffect, chainedEnemy.transform.position, Quaternion.identity);
+                        Instantiate(lightningBurstEffect, collider.transform.position, Quaternion.identity);
                     }
                 }
             }
         }
     }
+
 
     void OnDrawGizmosSelected()
     {

@@ -8,9 +8,33 @@ public class TowerUnit : MonoBehaviour
     public float fireRate = 1.0f; // Time between shots
     public float projectileSpeed = 10.0f; // Speed of the projectile
     public float attackRange = 10.0f; // Range of the tower
+    public float baseDamage = 10.0f; // Base damage of the tower
+
+    // Upgrade costs
+    public int rangeUpgradeCost = 50;
+    public int damageUpgradeCost = 75;
+    public int fireRateUpgradeCost = 100;
+
+    public GameObject floatingTextPrefab;
+    public Material highlightMaterial; // Material for highlight effect
+    public float highlightDuration = 2.0f; // Duration of highlight effect
 
     private float fireCountdown = 0f;
     private Transform target;
+    private List<GameObject> activeFloatingTexts = new List<GameObject>(); // To track active floating text instances
+
+
+    private Material originalMaterial; // To store the original material
+    private Renderer towerRenderer; // Renderer for the tower
+
+    void Start()
+    {
+        towerRenderer = GetComponent<Renderer>();
+        if (towerRenderer != null)
+        {
+            originalMaterial = towerRenderer.material;
+        }
+    }
 
     void Update()
     {
@@ -101,7 +125,7 @@ public class TowerUnit : MonoBehaviour
         }
 
         // Check for regular Projectile script
-        Projectile projectileScript = projectileInstance.GetComponent<Projectile>();
+        ProjectileBehaviour projectileScript = projectileInstance.GetComponent<ProjectileBehaviour>();
         if (projectileScript != null)
         {
             projectileScript.Seek(target, projectileSpeed);
@@ -111,6 +135,85 @@ public class TowerUnit : MonoBehaviour
 
         // Log an error if no valid script was found
         Debug.LogError("No valid projectile script found on the projectile prefab!");
+    }
+
+
+    public void ShowFloatingText(string message)
+    {
+        // Check if there is already an active floating text for this tower
+        if (activeFloatingTexts.Count > 0)
+        {
+            // Destroy the previous floating text
+            foreach (var text in activeFloatingTexts)
+            {
+                if (text != null)
+                {
+                    Destroy(text);
+                }
+            }
+            activeFloatingTexts.Clear();
+        }
+
+        if (floatingTextPrefab != null)
+        {
+            // Instantiate the new floating text
+            GameObject floatingTextInstance = Instantiate(floatingTextPrefab, transform.position + Vector3.up * 2f, Quaternion.identity);
+            FloatingText floatingTextScript = floatingTextInstance.GetComponent<FloatingText>();
+
+            if (floatingTextScript != null)
+            {
+                floatingTextScript.SetText(message); // Set the message
+            }
+
+            // Add the new text to the list
+            activeFloatingTexts.Add(floatingTextInstance);
+        }
+    }
+
+
+    // Highlight the tower temporarily
+    public void Highlight()
+    {
+        if (towerRenderer != null && highlightMaterial != null)
+        {
+            towerRenderer.material = highlightMaterial; // Apply the highlight material
+            StartCoroutine(RemoveHighlightAfterDelay());
+        }
+    }
+
+    private IEnumerator RemoveHighlightAfterDelay()
+    {
+        yield return new WaitForSeconds(highlightDuration);
+        if (towerRenderer != null)
+        {
+            towerRenderer.material = originalMaterial; // Revert to the original material
+        }
+    }
+
+
+    // Upgrade Methods
+    public void UpgradeRange()
+    {
+        attackRange += 2.0f; // Increase the attack range
+        ShowFloatingText("+2 Range"); // Ensure this message is correct
+        Highlight(); // Highlight the tower
+        Debug.Log("Range upgraded! New range: " + attackRange);
+    }
+
+    public void UpgradeDamage()
+    {
+        baseDamage += 5.0f; // Increase the damage
+        ShowFloatingText("+5 Damage"); // Ensure this message is correct
+        Highlight(); // Highlight the tower
+        Debug.Log("Damage upgraded! New damage: " + baseDamage);
+    }
+
+    public void UpgradeFireRate()
+    {
+        fireRate += 0.5f; // Increase the fire rate
+        ShowFloatingText("+0.5 Fire Rate"); // Ensure this message is correct
+        Highlight(); // Highlight the tower
+        Debug.Log("Fire rate upgraded! New fire rate: " + fireRate);
     }
 
 

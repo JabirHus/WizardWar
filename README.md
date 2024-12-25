@@ -1,3 +1,4 @@
 # WizardWar
 
-> Improved map, new enemy (armoured), updated wave system and more balance
+> Improved enemy spawning with wave UI, new enemies (flying + final wizard), fortress health UI 
+and game over panels

@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour
+public class EnemyMovement : MonoBehaviour
 {
-    public Transform[] waypoints;
+    public Transform[] path;  // assigned waypoint path
     private int currentWaypointIndex = 0;
     public float speed = 2f;
     private float defaultSpeed;
@@ -13,10 +13,13 @@ public class Enemy : MonoBehaviour
     private Material enemyMaterial;
 
     public GameObject MainTower; // Reference to the central fortress
-    public float damageToFortress = 10f;
+    public float damageToFortress = 10f; 
+
+
 
     void Start()
     {
+
         // Cache the material and store the original color
         Renderer renderer = GetComponent<Renderer>();
         if (renderer != null)
@@ -29,18 +32,19 @@ public class Enemy : MonoBehaviour
             Debug.LogError("Renderer not found on enemy object. Ensure the enemy has a Renderer component.");
         }
 
-        // Initialize waypoints
-        waypoints = new Transform[3];
-        waypoints[0] = GameObject.Find("Waypoint1").transform;
-        waypoints[1] = GameObject.Find("Waypoint2").transform;
-        waypoints[2] = GameObject.Find("Waypoint3").transform;
+
+        if (path == null || path.Length == 0)
+        {
+            Debug.Log("No path assigned or path is empty.");
+            Destroy(gameObject);
+        }
     }
 
     void Update()
     {
-        if (currentWaypointIndex < waypoints.Length)
+        if (currentWaypointIndex < path.Length)
         {
-            Transform targetWaypoint = waypoints[currentWaypointIndex];
+            Transform targetWaypoint = path[currentWaypointIndex];
             transform.position = Vector3.MoveTowards(transform.position, targetWaypoint.position, speed * Time.deltaTime);
 
             if (Vector3.Distance(transform.position, targetWaypoint.position) < 0.1f)
@@ -50,22 +54,24 @@ public class Enemy : MonoBehaviour
         }
     }
 
+
+    // Check if the enemy collides with the MainTower
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject == MainTower)
+        if (other.gameObject == MainTower) 
         {
             FortressHealth fortressHealth = MainTower.GetComponent<FortressHealth>();
             if (fortressHealth != null)
             {
                 fortressHealth.TakeDamage(damageToFortress); // Deal damage to the fortress
             }
-
+            
             // Destroy the enemy after it damages the MainTower
             Destroy(gameObject);
         }
     }
 
-    public void ApplySlow(float slowMultiplier, float duration)
+       public void ApplySlow(float slowMultiplier, float duration)
     {
         if (isSlowed) return; // Prevent stacking slows
 
@@ -95,4 +101,7 @@ public class Enemy : MonoBehaviour
             enemyMaterial.color = originalColor; // Restore the original color
         }
     }
+
+
 }
+
