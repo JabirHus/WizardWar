@@ -29,7 +29,7 @@ public class GameOver : MonoBehaviour
     public void restartGame(){
        Debug.Log("Restarting the game");
        Time.timeScale = 1f; // Reset time scale to normal
-       SceneManager.LoadScene("Medium"); 
+       SceneManager.LoadScene(SceneManager.GetActiveScene().name); // Reloads current scene
     }
 
 }

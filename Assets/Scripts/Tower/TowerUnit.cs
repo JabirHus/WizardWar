@@ -7,7 +7,7 @@ public class TowerUnit : MonoBehaviour
     public GameObject projectilePrefab; // The projectile prefab
     public float fireRate = 1.0f; // Time between shots
     public float projectileSpeed = 10.0f; // Speed of the projectile
-    public float attackRange = 30.0f; // Range of the tower
+    public float attackRange = 10.0f; // Range of the tower
 
     private float fireCountdown = 0f;
     private Transform target;
@@ -58,12 +58,61 @@ public class TowerUnit : MonoBehaviour
 
     void Shoot()
     {
-        // Instantiate the projectile and set its position and rotation
-        GameObject projectile = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
-        Projectile projectileScript = projectile.GetComponent<Projectile>();
+        if (projectilePrefab != null)
+        {
+            FireProjectile(projectilePrefab);
+        }
+        else
+        {
+            Debug.LogError("Projectile prefab is not assigned!");
+        }
+    }
+
+    void FireProjectile(GameObject projectileType)
+    {
+        // Instantiate the projectile
+        GameObject projectileInstance = Instantiate(projectileType, transform.position, Quaternion.identity);
+
+        // Check for BurnProjectile script
+        BurnProjectile burnProjectileScript = projectileInstance.GetComponent<BurnProjectile>();
+        if (burnProjectileScript != null)
+        {
+            burnProjectileScript.Seek(target, projectileSpeed);
+            Debug.Log("Fired a burn projectile at target: " + target.name);
+            return;
+        }
+
+        // Check for IceProjectile script
+        IceProjectile iceProjectileScript = projectileInstance.GetComponent<IceProjectile>();
+        if (iceProjectileScript != null)
+        {
+            iceProjectileScript.Seek(target, projectileSpeed);
+            Debug.Log("Fired an ice projectile at target: " + target.name);
+            return;
+        }
+
+        // Check for LightningProjectile script
+        LightningProjectile lightningProjectileScript = projectileInstance.GetComponent<LightningProjectile>();
+        if (lightningProjectileScript != null)
+        {
+            lightningProjectileScript.Seek(target, projectileSpeed);
+            Debug.Log("Fired a lightning projectile at target: " + target.name);
+            return;
+        }
+
+        // Check for regular Projectile script
+        ProjectileBehaviour projectileScript = projectileInstance.GetComponent<ProjectileBehaviour>();
         if (projectileScript != null)
         {
             projectileScript.Seek(target, projectileSpeed);
+            Debug.Log("Fired a normal projectile at target: " + target.name);
+            return;
         }
+
+        // Log an error if no valid script was found
+        Debug.LogError("No valid projectile script found on the projectile prefab!");
     }
+
+
+
 }

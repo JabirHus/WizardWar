@@ -36,7 +36,7 @@ public class WaveNumUI : MonoBehaviour
     {
         if (WaveNumText != null)
         {
-            WaveNumText.text = "WAVE " + SpawnWaveManager.GetCurrentWave();
+            WaveNumText.text = "WAVE " + SpawnWaveManager.GetCurrentWave()  + " / " + SpawnWaveManager.GetMaxWave();
         }
         else
         {

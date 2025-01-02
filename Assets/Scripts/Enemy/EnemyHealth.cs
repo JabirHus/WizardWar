@@ -48,7 +48,7 @@ public class EnemyHealth : MonoBehaviour
         }
         if (playerStats != null)
         {
-            playerStats.AddSkillPoints(50);
+            playerStats.AddSkillPoints(25);
         }
 
         Destroy(gameObject);

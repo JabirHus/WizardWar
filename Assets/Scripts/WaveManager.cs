@@ -24,6 +24,8 @@ public class WaveManager : MonoBehaviour
     public int enemiesPerWave = 3; 
     public float timeBetweenWaves = 25f; // Delay between waves
     public float spawnInterval = 2f; // Time between enemy spawns in a wave
+    private float waitUntilCameraAnimationCompletes = 5f;
+    public bool isHardMode;
 
     private int currentWave = 1; 
     private int enemiesSpawnedInWave = 0; 
@@ -40,11 +42,22 @@ public class WaveManager : MonoBehaviour
     }
 
     private IEnumerator SpawnWave()
-    {
-        while (currentWave <= maxWaves)
+    {   
+        if (currentWave == 1)
         {
+            yield return new WaitForSeconds(waitUntilCameraAnimationCompletes);
+        }
+        while (currentWave < maxWaves)
+        {
+            if (isHardMode){
+                enemiesPerWave=enemiesPerWave+2;
+            }
             Debug.Log("Starting Wave: " + currentWave);
-
+            if (currentWave == maxWaves)
+            {
+                enemiesPerWave = 1; // Only one enemy on the final wave
+            }
+            
             enemiesSpawnedInWave = 0;
             for (int i = 0; i < enemiesPerWave; i++)
             {
@@ -57,9 +70,27 @@ public class WaveManager : MonoBehaviour
 
             yield return new WaitForSeconds(timeBetweenWaves); // Wait before the next wave starts
 
-            currentWave++;
+            if (currentWave != maxWaves ){
+                currentWave++;
+            }
 
             OnWaveNumChanged?.Invoke(); //Update to wave num display
+        } 
+        //SPAWN FINAL WIZARD AFTER WAVES ENUMERATED
+        if (currentWave == maxWaves){
+            Debug.Log("Final wizard approaches: " + currentWave);
+            enemiesPerWave = 1; // Only one enemy on the final wav
+            
+            enemiesSpawnedInWave = 0;
+            for (int i = 0; i < enemiesPerWave; i++)
+            {
+                SpawnEnemy();
+                enemiesSpawnedInWave++;
+                yield return new WaitForSeconds(spawnInterval); // Wait before spawning the next enemy
+            }
+
+            Debug.Log("Wave " + currentWave + " complete!");
+
         }
 
         Debug.Log("YOU WIN - All waves complete!");
@@ -72,20 +103,21 @@ public class WaveManager : MonoBehaviour
         Transform spawnPoint = spawnPoints[spawnIndex];
 
         GameObject enemy = null; 
+        
 
-        // Enemy type spawned is only infantry on wave 1
-        if (currentWave==1){
-            enemy = Instantiate(enemyPrefabs[0], spawnPoint.position, spawnPoint.rotation);
-        }
-        //Enemy type flying occur in wave 3
-        if (currentWave==3){
-            enemiesPerWave=4;
-            enemy = Instantiate(enemyPrefabs[2], spawnPoint.position, spawnPoint.rotation);
-        }
-        //Spawn final wizard on wave 7
-        if (currentWave==4){
+        //Spawn final wizard on final wave
+        if (currentWave==maxWaves){
             enemiesPerWave=1;
             enemy = Instantiate(enemyPrefabs[3], spawnPoint.position, spawnPoint.rotation);
+        }
+        //Enemy type includes flying occur wave 3 (not in easy though)
+        else if (currentWave==3  ){
+            int enemyIndex = UnityEngine.Random.Range(1, 3); // Randomly pick Flying  Armored
+            enemy = Instantiate(enemyPrefabs[enemyIndex], spawnPoint.position, spawnPoint.rotation);
+        }
+        // Enemy type spawned is only infantry on wave 1 
+        else if (currentWave==1){
+            enemy = Instantiate(enemyPrefabs[0], spawnPoint.position, spawnPoint.rotation);
         }
         else{ 
             int enemyIndex = UnityEngine.Random.Range(0, 2);
@@ -116,5 +148,12 @@ public class WaveManager : MonoBehaviour
     {
         return currentWave;
     }
+
+    public float GetMaxWave()
+    {
+        return maxWaves;
+    }
+
+
 }
 
