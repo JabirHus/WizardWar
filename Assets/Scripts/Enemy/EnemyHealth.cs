@@ -2,16 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class EnemyHealth : MonoBehaviour
 {
-    public float maxHealth = 100f;  // Maximum health of the enemy
-    private float currentHealth;
-
-    public GameObject healthBarPrefab; // Reference to the health bar prefab
-    private HealthBar healthBar; // Reference to the health bar instance
-
+    public float maxHealth = 250f; // Maximum health of the enemy
+    public bool isEvilWizard = false; //Indicates if enemy is evil wizard 
+    public GameObject GameOverPanel; // Reference to the Game Over Panel if evil wizard dies
     // Reference to the player's stats
     public PlayerStats playerStats;
+    public GameObject healthBarPrefab; // Reference to the health bar prefab
+    private HealthBar healthBar; // Reference to the health bar instance
+    private float currentHealth;
+
 
     void Start()
     {
@@ -39,11 +41,17 @@ public class EnemyHealth : MonoBehaviour
     // Destroy the enemy when health reaches 0 and add skill points
     void Die()
     {
+        if (isEvilWizard){
+            // Show Game over panel in canvas
+            GameOverPanel.SetActive(true);
+            Time.timeScale = 0f; 
+        }
         if (playerStats != null)
         {
-            playerStats.AddSkillPoints(50);
+            playerStats.AddSkillPoints(25);
         }
 
         Destroy(gameObject);
     }
 }
+
