@@ -4198,7 +4198,7 @@ MonoBehaviour:
   placementIndicatorPrefab: {fileID: 8606444310156479780, guid: 584996c5e46b5ea4183868d63d10a0de, type: 3}
   rangeIndicatorPrefab: {fileID: 6999333172017744255, guid: ac2bb09da36eee94b9fb06fa4febf0e1, type: 3}
   rangeIndicatorMaterial: {fileID: 2100000, guid: e163164580efdaf4e9912db4fc25fc3b, type: 2}
-  validPlacementColor: {r: 0, g: 1, b: 0, a: 1}
+  validPlacementColor: {r: 0.5299397, g: 0.8396226, b: 0.49638063, a: 0.6313726}
   invalidPlacementColor: {r: 1, g: 0, b: 0, a: 1}
   lockedPlacementColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   placementRadius: 1
@@ -7071,6 +7071,10 @@ PrefabInstance:
       propertyPath: MainTower
       value: 
       objectReference: {fileID: 1323233265}
+    - target: {fileID: 574986828878765128, guid: 4b23998cbce82e5458b640c8a4a1f41b, type: 3}
+      propertyPath: damageToFortress
+      value: 100
+      objectReference: {fileID: 0}
     - target: {fileID: 574986828878765128, guid: 4b23998cbce82e5458b640c8a4a1f41b, type: 3}
       propertyPath: waypoints.Array.size
       value: 5

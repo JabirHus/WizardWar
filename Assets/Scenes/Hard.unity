@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.30692244, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -4128,7 +4128,7 @@ MonoBehaviour:
   placementIndicatorPrefab: {fileID: 8606444310156479780, guid: 584996c5e46b5ea4183868d63d10a0de, type: 3}
   rangeIndicatorPrefab: {fileID: 6999333172017744255, guid: ac2bb09da36eee94b9fb06fa4febf0e1, type: 3}
   rangeIndicatorMaterial: {fileID: 2100000, guid: e163164580efdaf4e9912db4fc25fc3b, type: 2}
-  validPlacementColor: {r: 0, g: 1, b: 0, a: 1}
+  validPlacementColor: {r: 0.3533202, g: 0.8490566, b: 0.34976855, a: 0.5882353}
   invalidPlacementColor: {r: 1, g: 0, b: 0, a: 1}
   lockedPlacementColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   placementRadius: 1
@@ -7171,6 +7171,10 @@ PrefabInstance:
     - target: {fileID: 7657363478568835311, guid: 618f6d866a0472e43baa58ba5ab64095, type: 3}
       propertyPath: path.Array.size
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7657363478568835311, guid: 618f6d866a0472e43baa58ba5ab64095, type: 3}
+      propertyPath: damageToFortress
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 7657363478568835311, guid: 618f6d866a0472e43baa58ba5ab64095, type: 3}
       propertyPath: 'path.Array.data[0]'
